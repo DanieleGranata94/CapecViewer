@@ -1,0 +1,182 @@
+{%  extends 'pages/base.html' %}
+{% load parse %}
+{% load int_parse %}
+{% load string %}
+{% load str_split %}
+
+{% block content %}
+
+<style>
+
+.table th{
+  width: 17%;
+  vertical-align: middle;
+}
+
+.a th,
+.a td {
+	border:1px;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	overflow:hidden;
+}
+
+</style>
+
+<!-- risultati-->
+<br>
+<div class="row">
+	<div class="col-md">
+	
+		<div class="card">
+			<table class="table">
+			
+				{% for i in object %}
+				<tr>
+					<th>Name</th>
+					<td>{{i.name}}</td>
+				</tr>
+				
+				<tr>
+					<th>Id</th>
+					<td>{{i.id}}</td>
+				</tr>
+				
+				<tr>
+					<th>Status</th>
+					<td>{{i.status}}</td>
+				</tr>
+				
+				<tr>
+					<th>Description</th>
+					<td>{{i.description}}</td>
+				</tr>
+				
+				<tr>
+					<th>Alternate Terms</th>
+					<td>{{i.alternateterms|string:""|linebreaksbr}}</td>
+				</tr>
+				
+				<tr>
+					<th>Likelihood of Attack</th>
+					<td>{{i.likelihoodofattack}}</td>
+				</tr>
+				
+				<tr>
+					<th>Typical Severity</th>
+					<td>{{i.typicalseverity}}</td>					
+				</tr>
+					
+				<tr>
+					<th>Related Attack Patterns</th>
+					
+					<td>
+						{% if i.relatedattackpatterns != None %}
+						
+							{% for j in i.relatedattackpatterns|parse:"" %}
+								
+								{% with k=j|str_split:"" %}
+								
+									<div class="card" style="width: 14rem;">
+										<table class='a'>
+											<th>NATURE: {{k.0}}</th>								
+										</table>
+									</div>
+									
+									{% with z=j|int_parse:"" %}
+										<div class="card" style="width: 14rem;">
+											<table class='a'>
+												<td>													
+													{{z.1}} {{z.2}} <a href="/details/{{z.3}}/">{{z.3}}</a>													
+												</td>
+											</table>
+										</div>
+									{% endwith %}
+									
+								{% endwith %}
+								
+							{% endfor %}		
+						
+						{% else %}
+							None                                
+						{% endif %}
+					</td>					
+				</tr>	
+				
+				<tr>
+					<th>Execution Flow</th>
+					<td>{{i.executionflow|string:""|linebreaksbr}}</td>
+				</tr>
+				
+				<tr>
+					<th>Prerequisites</th>
+					<td>{{i.prerequisites|string:""|linebreaksbr}}</td>
+				</tr>
+				
+				<tr>
+					<th>Skills Required</th>
+					<td>{{i.skillsrequired|string:""|linebreaksbr}}</td>
+				</tr>
+												
+				<tr>
+					<th>Abstraction</th>
+					<td>{{i.abstraction}}</td>
+				</tr>
+				
+				<tr>
+					<th>Resources Required</th>
+					<td>{{i.resourcesrequired|string:""|linebreaksbr}}</td>
+				</tr>
+				
+				<tr>
+					<th>Indicators</th>
+					<td>{{i.indicators|string:""|linebreaksbr}}</td>
+				</tr>
+				
+				<tr>
+					<th>Consequences</th>
+					<td>{{i.consequences|string:""|linebreaksbr}}</td>
+				</tr>
+				
+				<tr>
+					<th>Mitigations</th>
+					<td>{{i.mitigations|string:""|linebreaksbr}}</td>
+				</tr>
+				
+				<tr>
+					<th>Example Instances</th>
+					<td>{{i.exampleinstances|string:""|linebreaksbr}}</td>
+				</tr>
+				
+				<tr>
+					<th>Related Weaknesses</th>
+					<td>
+						
+						The related weaknesses based on the CWE List are:<br>
+						<br>{{i.relatedweaknesses|string:""|linebreaksbr}}<br>
+						For more information about those weaknesses, visit the site:
+						<a href="https://cwe.mitre.org/about/index.html">Common Weakness Enumeration (CWE™)</a>
+						
+					</td>
+				</tr>
+				
+				<tr>
+					<th>Taxonomy Mappings</th>
+					<td>{{i.taxonomymappings|string:""|linebreaksbr}}</td>
+				</tr>
+				
+				<tr>
+					<th>Notes</th>
+					<td>{{i.notes}}</td>
+				</tr>
+				
+				{% endfor %}
+				
+			</table>
+		</div>
+		
+	</div>	
+</div>
+<br>
+
+{% endblock content %}

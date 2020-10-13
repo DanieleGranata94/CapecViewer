@@ -1,0 +1,111 @@
+{%  extends 'pages/base.html' %}
+{% load parse %}
+{% load int_parse %}
+{% load str_split %}
+{% block content %}
+
+<style>
+
+.table th,
+.table td{  
+    vertical-align: middle;
+}
+
+.a th,
+.a td{
+    border:1px;
+}
+
+</style>
+
+<!-- risultati-->
+<br>
+<div class="row">
+    <div class="col-md">
+	
+		{% if object != None %}
+				
+				<div class="card card-body">
+					<h4>Ecco i risultati della tua ricerca</h4><br>
+					<p><font size="3">La lista degli attacchi collegati al CAPEC ID inserito è la seguente:</font></p>				
+				</div>
+				<br>
+				<div class="card">
+					<table class="table">
+					
+						<tr>
+							<th width="32%">Name</th>
+							<th style="padding-left: 10px">Id</th>
+							<th style="padding-left: 30px">Abstraction</th>
+							<th>Related Attack Patterns</th>                        
+							<th style="padding-left: 25px">Typical Severity</th>
+							<th style="padding-left: 25px">Likelihood of Attack</th>
+						</tr>
+						
+						{% for i in object %}
+							<tr>
+								<td width="32%"><a href="/details/{{i.id}}/">{{i.name}}</a></td>
+								<td>{{i.id}}</td>
+								<td style="text-align:center; padding-right: 60px">{{i.abstraction}}</td>
+								
+								<td width="19%">
+								
+									{% if i.relatedattackpatterns != None %}
+									
+										{% for j in i.relatedattackpatterns|parse:"" %}
+											
+											{% with k=j|str_split:"" %}
+								
+												<div class="card" style="width: 14rem;">
+													<table class='a'>
+														<th>NATURE: {{k.0}}</th>								
+													</table>
+												</div>
+												
+												{% with z=j|int_parse:"" %}
+													<div class="card" style="width: 14rem;">
+														<table class='a'>
+															<td>													
+																{{z.1}} {{z.2}} <a href="/details/{{z.3}}/">{{z.3}}</a>													
+															</td>
+														</table>
+													</div>
+												{% endwith %}
+									
+											{% endwith %}
+											
+										{% endfor %}
+									{% else %}
+										<div class="card" style="width: 14rem; height:55px">
+											<table class="table">
+												<td style="text-align:center;">None</td>
+											</table>
+										</div>
+									{% endif %} 
+								</td>
+								
+								<td style="text-align:center; padding-right: 60px">{{i.typicalseverity}}</td>
+								<td style="text-align:center; padding-right: 80px">{{i.likelihoodofattack}}</td>
+							</tr>                                    
+						{% endfor %}
+						
+					</table>
+					
+				</div>
+			{% else %}
+				
+				<div class="card" style="width: 36rem">
+					<div class="card-body">
+						<h4>Nessun risultato trovato</h4><br>
+						<p>
+							La ricerca effettuata non ha prodotto alcuna corrispondenza.&nbsp;
+							<a href='query.html'><input type="submit" class="btn btn-primary" value="Indietro"></a>
+						</p>
+					</div>
+				</div>	
+			{% endif %}
+			
+    </div>  
+</div>
+
+{% endblock content %}

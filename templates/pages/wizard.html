@@ -1,0 +1,49 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+
+<style>
+.btn btn-info{
+    background-color: #008CBA;
+}
+</style>
+
+<!-- home -->
+<br>
+<div class="row">
+    <div class="col">
+        <div class="card card-body">
+            <h1>Wizard</h1>
+            <h5>Descrizione della procedura guidata</h5>
+        </div>
+    </div>
+    
+</div>
+<br>
+
+<br>
+<div class="card-group">
+
+
+      <!-- button Meta -->
+      <form method="get">
+        <button class="btn btn-default">
+            <a href="{% url 'MetaSelection' %}" class="btn btn-primary" role="button">Inizia la procedura guidata</a>
+        </button>
+      </form>
+      
+    </div>
+  </div>
+  
+
+  
+</div>
+<br>    
+
+    
+
+    
+<!--prova-->
+
+
+{% endblock %}

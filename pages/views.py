@@ -94,20 +94,59 @@ def MetaSelection_view(request):
 @csrf_exempt
 def StandardSelection_view(request):
 
-    obj = MetaAbstractions.objects.all()
-    context = {
-        'object': obj
-    }
-
-    childrens=[]
+    context={}
+    childrens=set()
     if request.method == 'POST':
-        val = request.POST.getlist('checkboxSelection')
-        print(val)
-        for e in val:
-            childrens.append(MetaAbstractions.objects.filter(relatedattackpatterns__contains=":" + e + "::"))
+        list_selected_ids = request.POST.getlist('checkboxSelection')
+        print(list_selected_ids)
 
+        for e in list_selected_ids:
+            query_set_result=(DomainsOfAttack.objects.filter(relatedattackpatterns__contains="::NATURE:ChildOf:CAPEC ID:"+e+"::"))
+            for e in query_set_result:
+                childrens.add(e)
+
+        context = {
+            'meta' : list_selected_ids,
+            'object': childrens
+        }
 
     return render(request, "pages/StandardSelection.html", context)
+
+@csrf_exempt
+def ResultsWizard_view(request):
+
+    context={}
+    resultSet=set()
+    if request.method == 'POST':
+        list_selected_ids = request.POST.getlist('checkboxSelection')
+        for e in list_selected_ids:
+            query_set_result=(DomainsOfAttack.objects.filter(relatedattackpatterns__contains="::NATURE:ChildOf:CAPEC ID:"+str(e)+"::"))
+            for el in query_set_result:
+                query_set_result2=(DomainsOfAttack.objects.filter(relatedattackpatterns__contains="::NATURE:ChildOf:CAPEC ID:"+str(el.id)+"::"))
+                resultSet.add(el)
+                #for standard childOf standard
+                for elm in query_set_result2:
+                    resultSet.add(elm)
+
+        context = {
+            'standard' : list_selected_ids,
+            'object': resultSet
+        }
+
+    return render(request, "pages/ResultsWizard.html", context)
+
+
+
+def searchDetails(id,resultSet):
+    print(resultSet)
+    query_set_result=(DomainsOfAttack.objects.filter(relatedattackpatterns__contains="::NATURE:ChildOf:CAPEC ID:"+str(id)+"::"))
+    for e in query_set_result:
+        resultSet.add(e)
+        print(str(id)+" "+str(e.id))
+        return searchDetails(e.id,resultSet)
+
+
+
 
 
 def StandardAbstractions_view(request):

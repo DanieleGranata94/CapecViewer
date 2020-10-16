@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('', views.home_view, name='home'),
 	url(r'^MetaSelection', views.MetaSelection_view, name='MetaSelection'),
+	url(r'^ResultsWizard', views.ResultsWizard_view, name='ResultsWizard'),
 	url(r'^StandardSelection', views.StandardSelection_view, name='StandardSelection'),
     url(r'^home', views.home_view, name='home'),
 	url(r'^id', views.id_view, name='id'),

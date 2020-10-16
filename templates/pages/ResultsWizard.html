@@ -24,7 +24,7 @@
         <div class="col-md">
 
             <div class="card card-body">
-                <p><font size="3">Seleziona le minacce Standard associate alle Meta dalla seguente lista:</font></p>
+                <p><font size="3">I risultati di tipo Detail relativo alle selezioni effettuate sono riportate in tabella</font></p>
             </div>
 
 
@@ -32,14 +32,9 @@
             <div class="card">
                 <form method="post" action="/ResultsWizard">
 
-                    <button class="btn btn-primary" type="submit">
-                        NEXT
-                    </button>
-
                     <table class="table">
 
                         <tr>
-                            <th width="5%"></th>
 
                             <th width="32%">Name</th>
                             <th style="padding-left: 10px">Id</th>
@@ -50,26 +45,10 @@
 
 
                         </tr>
-                        <script language="JavaScript">
-                            function toggle(source) {
-                                checkboxes = document.getElementsByName('checkboxSelection');
-                                for(var i=0, n=checkboxes.length;i<n;i++) {
-                                    checkboxes[i].checked = source.checked;
-                                }
-                            }
-                        </script>
-                        <br>
-                        <br>
-                        <input style="margin-left: 30px" type="checkbox" onClick="toggle(this)" /> CheckAll<br/>
-                        <br>
 
                         {% for i in object %}
                             <tr>
-                                <td width="5%" style="text-align:center; padding-right: 2px">
 
-                                    <input type="checkbox" id="{{ i.id }}" name="checkboxSelection" value="{{ i.id }}" />
-
-                                </td>
 
                                 <td width="32%"><a href="/details/{{i.id}}/">{{i.name}}</a></td>
                                 <td>{{i.id}}</td>
@@ -119,9 +98,7 @@
                             </tr>
                         {% endfor %}
                     </table>
-                    <button class="btn btn-primary" type="submit">
-                        NEXT
-                    </button>
+
                 </form>
 
 

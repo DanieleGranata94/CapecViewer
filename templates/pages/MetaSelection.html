@@ -26,10 +26,16 @@
         <div class="card card-body">
             <p><font size="3">Seleziona le minacce Meta dalla seguente lista:</font></p>
         </div>
+
         
         <br>
         <div class="card">
             <form method="post" action="/StandardSelection">
+
+                <button class="btn btn-primary" type="submit">
+                    NEXT
+                </button>
+
             <table class="table">
             
                 <tr>
@@ -44,7 +50,18 @@
 
 
                 </tr>
-
+                <script language="JavaScript">
+                    function toggle(source) {
+                        checkboxes = document.getElementsByName('checkboxSelection');
+                        for(var i=0, n=checkboxes.length;i<n;i++) {
+                            checkboxes[i].checked = source.checked;
+                        }
+                    }
+                </script>
+                <br>
+                <br>
+                <input style="margin-left: 30px" type="checkbox" onClick="toggle(this)" /> CheckAll<br/>
+                <br>
                 {% for i in object %}
                     <tr>
                         <td width="5%" style="text-align:center; padding-right: 2px">
@@ -101,9 +118,9 @@
                     </tr>                                    
                 {% endfor %}
                 </table>
-                    <button class="btn btn-primary" type="submit">
-                        NEXT
-                    </button>
+                <button class="btn btn-primary" type="submit">
+                    NEXT
+                </button>
                 </form>
 
 

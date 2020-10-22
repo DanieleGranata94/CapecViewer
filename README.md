@@ -28,4 +28,6 @@ In order to use and start the application you need to:
 
 ### Contacts ###
 
-* Daniele Granata, danielegranata94@gmail.com
+* Massimiliano Rak, massimiliano.rak@unicampania.it
+* Giovanni Salzillo, giovanni.salzillo@unicampania.it
+* Daniele Granata, daniele.granata@unicampania.it

@@ -5,7 +5,6 @@ register = template.Library()
 
 @register.filter(name='str_split')
 @stringfilter
-
 def str_split(value, arg):  
 
     str_split = value.rsplit(' ',3)

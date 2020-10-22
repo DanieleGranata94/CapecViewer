@@ -1,4 +1,5 @@
 {%  extends 'pages/base.html' %}
+{% load string %}
 {% load parse %}
 {% load int_parse %}
 {% load str_split %}
@@ -72,11 +73,13 @@
 
                         <tr>
 
-                            <th width="42%">Name</th>
+                            <th width="25%">Name</th>
                             <th style="padding-left: 10px">Id</th>
-                            <th style="padding-left: 30px">Abstraction</th>
-                            <th>Related Attack Patterns</th>
+                            <th>Child Of</th>
                             <th>Execution Flow</th>
+                            <th>Prerequisites</th>
+                            <th>ResourcesRequired</th>
+
 
 
 
@@ -87,9 +90,8 @@
                             <tr>
 
 
-                                <td width="32%"><a href="/details/{{i.id}}/">{{i.name}}</a></td>
+                                <td width="25%"><a href="/details/{{i.id}}/">{{i.name}}</a></td>
                                 <td>{{i.id}}</td>
-                                <td style="text-align:center; padding-right: 50px">{{i.abstraction}}</td>
 
 
 
@@ -131,6 +133,8 @@
                                 </td>
 
                                 <td>{{i.executionflow|string:""|linebreaksbr}}</td>
+                                <td>{{ i.prerequisites }}</td>
+                                <td>{{ i.resourcesrequired }}</td>
 
 
 

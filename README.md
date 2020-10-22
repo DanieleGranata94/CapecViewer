@@ -20,9 +20,9 @@ Software Requirements
 
 In order to use and start the application you need to:
 
-1) Install django using command: pip3 install Django
+1) Install django using command: ```bash pip3 install Django ```
 
-2) Run server tiping: python3 manage.py runserver 
+2) Run server typing: ```bash python3 manage.py runserver ```
 
 3) App available on: http://127.0.0.1:8000
 

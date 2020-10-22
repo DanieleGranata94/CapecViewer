@@ -3,6 +3,40 @@
 {% load int_parse %}
 {% load str_split %}
 {% block content %}
+    <script type="text/javascript">
+
+
+        function exportTableToExcel(tableID, filename = ''){
+            var downloadLink;
+            var dataType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById(tableID);
+            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+            // Specify file name
+            filename = filename?filename+'.xls':'excel_data.xls';
+
+            // Create download link element
+            downloadLink = document.createElement("a");
+
+            document.body.appendChild(downloadLink);
+
+            if(navigator.msSaveOrOpenBlob){
+                var blob = new Blob(['\ufeff', tableHTML], {
+                    type: dataType
+                });
+                navigator.msSaveOrOpenBlob( blob, filename);
+            }else{
+                // Create a link to the file
+                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+                // Setting the file name
+                downloadLink.download = filename;
+
+                //triggering the function
+                downloadLink.click();
+            }
+        }
+    </script>
 
     <style>
 
@@ -18,10 +52,11 @@
 
     </style>
 
+
     <!-- risultati-->
     <br>
-    <div class="row">
-        <div class="col-md">
+    <div class="row" style="alignment: center">
+        <div class="col-md" style="alignment: center">
 
             <div class="card card-body">
                 <p><font size="3">I risultati di tipo Detail relativo alle selezioni effettuate sono riportate in tabella</font></p>
@@ -31,17 +66,19 @@
             <br>
             <div class="card">
                 <form method="post" action="/ResultsWizard">
+                    <div id="dvData">
 
-                    <table class="table">
+                    <table class="table"  id="tblData">
 
                         <tr>
 
-                            <th width="32%">Name</th>
+                            <th width="42%">Name</th>
                             <th style="padding-left: 10px">Id</th>
                             <th style="padding-left: 30px">Abstraction</th>
                             <th>Related Attack Patterns</th>
-                            <th style="padding-left: 25px">Typical Severity</th>
-                            <th style="padding-left: 25px">Likelihood of Attack</th>
+                            <th>Execution Flow</th>
+
+
 
 
                         </tr>
@@ -53,6 +90,8 @@
                                 <td width="32%"><a href="/details/{{i.id}}/">{{i.name}}</a></td>
                                 <td>{{i.id}}</td>
                                 <td style="text-align:center; padding-right: 50px">{{i.abstraction}}</td>
+
+
 
                                 <td width="19%">
                                     {% if i.relatedattackpatterns != None %}
@@ -79,6 +118,8 @@
 
                                             {% endwith %}
 
+
+
                                         {% endfor %}
                                     {% else %}
                                         <div class="card" style="width: 14rem;  height:55px">
@@ -89,8 +130,8 @@
                                     {% endif %}
                                 </td>
 
-                                <td style="text-align:center; padding-right: 60px">{{i.typicalseverity}}</td>
-                                <td style="text-align:center; padding-right: 75px">{{i.likelihoodofattack}}</td>
+                                <td>{{i.executionflow|string:""|linebreaksbr}}</td>
+
 
 
 
@@ -98,15 +139,30 @@
                             </tr>
                         {% endfor %}
                     </table>
+                    </div>
+                <br>
+
 
                 </form>
 
 
 
 
+
+
+            </div>
+            <br><br><br>
+            <div class="center" style="align-items: center">
+                <button class="btn btn-primary"  style="alignment: center;margin-left: 650px" id="btnExport" onclick="exportTableToExcel('tblData','results');"> EXPORT
+                    RESULTS IN XLS</button>
+                <br><br><br>
             </div>
 
+        
         </div>
     </div>
 
 {% endblock content %}
+
+
+

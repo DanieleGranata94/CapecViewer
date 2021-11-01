@@ -1,0 +1,133 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+
+<style>
+.btn btn-info{
+    background-color: #008CBA;
+}
+</style>
+
+<!-- home -->
+<br>
+<div class="row">
+    <div class="col">
+        <div class="card card-body">
+            <h1>Strumenti di ricerca</h1>
+            <h5>Qui puoi filtrare il contenuto del catalogo in base alle tue esigenze:</h5>
+        </div>
+    </div>
+    
+</div>
+<br>
+
+<br>
+<div class="card-group">
+
+  <div class="card text-center">    
+    <div style="width: 100%; display: inline-block">
+        <div class="card-body">
+        
+            <!-- form ID -->
+            <form action="/id" class="form-text" method="post">
+                <h5 class="card-title">Ricerca per ID</h5>
+                <p class="card-text">Inserisci l'ID dell'attacco desiderato:</p>
+                <input type="number" class="form-control-sm-2" id="id_query" name="id_query" min="1" required>
+                <input type="submit" class="btn btn-primary" value="Cerca">
+                <input class="btn btn-outline-primary" type="reset" value="Cancella">               
+            </form>
+			
+        </div>
+    </div>
+  </div>
+  
+  <div class="card text-center">    
+    <div style="width: 100%; display: inline-block">
+        <div class="card-body">
+        
+            <!-- form ParentOf -->
+            <form action="/parent" class="form-text" method="post">
+                <h5 class="card-title">Ricerca per Relazione</h5>
+                <p class="card-text">Inserisci l'ID dell'attacco di cui vuoi conoscere le relazioni:</p>              
+                <input type="number" class="form-control-sm-2" id="id_query" name="id_query" min="1" required>
+                <input type="submit" class="btn btn-primary" value="Cerca">
+                <input class="btn btn-outline-primary" type="reset" value="Cancella">
+            </form>
+          
+        </div>
+    </div>
+   </div>
+   
+   <div class="card text-center">   
+    <div style="width: 100%; display: inline-block">
+        <div class="card-body">
+        
+            <!-- form name -->
+            <form action="/name" class="form-text" method="post">
+                <h5 class="card-title">Ricerca per Nome</h5>
+                <p class="card-text">Inserisci il nome dell'attacco desiderato:</p>
+                <input type="text" class="form-control-sm-2" id="name" name="name" required>
+                <input type="submit" class="btn btn-primary" value="Cerca">
+                <input class="btn btn-outline-primary" type="reset" value="Cancella">               
+            </form>
+          
+        </div>
+    </div>
+  </div>
+  
+</div>
+<br>
+
+
+<br>
+<div class="card-group"; style="margin: auto; text-align:center">
+
+  <div class="card"; style="height: 80%;">
+    <div class="card-body">
+    
+      <!-- button Meta -->
+      <form method="get">
+        <button class="btn btn-default">
+            <a href="{% url 'MetaAbstractions' %}" class="btn btn-primary" role="button">Cerca tutti gli attacchi di tipo "Meta"</a>
+        </button>
+      </form>
+      
+    </div>
+  </div>
+  
+  <div class="card"; style="height: 80%;">
+    <div class="card-body">
+    
+      <!-- button Standard -->
+      <form method="get">
+        <button class="btn btn-default">
+            <a href="{% url 'StandardAbstractions' %}" class="btn btn-primary" role="button">Cerca tutti gli attacchi di tipo "Standard"</a>
+        </button>
+      </form>
+      
+    </div>
+  </div>
+    
+  <div class="card"; style="height: 80%;">
+    <div class="card-body">
+      
+      <!-- button Detailed -->
+      <form method="get">
+        <button class="btn btn-default">
+            <a href="{% url 'DetailedAbstractions' %}" class="btn btn-primary" role="button">Cerca tutti gli attacchi di tipo "Detailed"</a>
+        </button>
+      </form>
+      
+    </div>
+  </div>
+  
+</div>
+<br>    
+
+    
+
+    
+<!--prova-->
+
+
+{% endblock %}

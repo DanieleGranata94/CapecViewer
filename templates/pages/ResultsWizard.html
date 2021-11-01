@@ -1,0 +1,172 @@
+{%  extends 'pages/base.html' %}
+{% load string %}
+{% load parse %}
+{% load int_parse %}
+{% load str_split %}
+{% block content %}
+    <script type="text/javascript">
+
+
+        function exportTableToExcel(tableID, filename = ''){
+            var downloadLink;
+            var dataType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById(tableID);
+            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+            // Specify file name
+            filename = filename?filename+'.xls':'excel_data.xls';
+
+            // Create download link element
+            downloadLink = document.createElement("a");
+
+            document.body.appendChild(downloadLink);
+
+            if(navigator.msSaveOrOpenBlob){
+                var blob = new Blob(['\ufeff', tableHTML], {
+                    type: dataType
+                });
+                navigator.msSaveOrOpenBlob( blob, filename);
+            }else{
+                // Create a link to the file
+                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+                // Setting the file name
+                downloadLink.download = filename;
+
+                //triggering the function
+                downloadLink.click();
+            }
+        }
+    </script>
+
+    <style>
+
+        .table th,
+        .table td{
+            vertical-align: middle;
+        }
+
+        .a th,
+        .a td{
+            border:1px;
+        }
+
+    </style>
+
+
+    <!-- risultati-->
+    <br>
+    <div class="row" style="alignment: center">
+        <div class="col-md" style="alignment: center">
+
+            <div class="card card-body">
+                <p><font size="3">I risultati di tipo Detail relativo alle selezioni effettuate sono riportate in tabella</font></p>
+            </div>
+
+
+            <br>
+            <div class="card">
+                <form method="post" action="/ResultsWizard">
+                    <div id="dvData">
+
+                    <table class="table"  id="tblData">
+
+                        <tr>
+
+                            <th width="25%">Name</th>
+                            <th style="padding-left: 10px">Id</th>
+                            <th>Child Of</th>
+                            <th>Execution Flow</th>
+                            <th>Prerequisites</th>
+                            <th>ResourcesRequired</th>
+
+
+
+
+
+                        </tr>
+
+                        {% for i in object %}
+                            <tr>
+
+
+                                <td width="25%"><a href="/details/{{i.id}}/">{{i.name}}</a></td>
+                                <td>{{i.id}}</td>
+
+
+
+                                <td width="19%">
+                                    {% if i.relatedattackpatterns != None %}
+
+                                        {% for j in i.relatedattackpatterns|parse:"" %}
+
+                                            {% with k=j|str_split:"" %}
+
+                                                <div class="card" style="width: 14rem;">
+                                                    <table class='a'>
+                                                        <th>NATURE: {{k.0}}</th>
+                                                    </table>
+                                                </div>
+
+                                                {% with z=j|int_parse:"" %}
+                                                    <div class="card" style="width: 14rem;">
+                                                        <table class='a'>
+                                                            <td>
+                                                                {{z.1}} {{z.2}} <a href="/details/{{z.3}}/">{{z.3}}</a>
+                                                            </td>
+                                                        </table>
+                                                    </div>
+                                                {% endwith %}
+
+                                            {% endwith %}
+
+
+
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="card" style="width: 14rem;  height:55px">
+                                            <table class="table">
+                                                <td style="text-align:center;">None</td>
+                                            </table>
+                                        </div>
+                                    {% endif %}
+                                </td>
+
+                                <td>{{i.executionflow|string:""|linebreaksbr}}</td>
+                                <td>{{ i.prerequisites }}</td>
+                                <td>{{ i.resourcesrequired }}</td>
+
+
+
+
+
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    </div>
+                <br>
+
+
+                </form>
+
+
+
+
+
+
+            </div>
+            <br><br><br>
+            <div class="center" style="align-items: center">
+                <button class="btn btn-primary"  style="alignment: center;margin-left: 650px" id="btnExport" onclick="exportTableToExcel('tblData','results');"> EXPORT
+                    RESULTS IN XLS</button>
+                <br><br><br>
+            </div>
+
+        
+        </div>
+    </div>
+
+{% endblock content %}
+
+
+

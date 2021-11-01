@@ -1,0 +1,81 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+
+<!-- home -->
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+			<h1>Benvenuto nel catalogo CAPEC</h1>
+			<h5>Qui puoi effettuare qualsiasi ricerca in base alle tue esigenze:</h5>
+			
+			<br>
+			<ul>
+			  <li><a href = "/query">
+			   Strumenti di ricerca</a>
+			    - In questa pagina potrai filtrare i dati in base alle tue richieste</li>
+			</ul>
+			
+		</div>
+	</div>
+	
+</div>
+
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+			
+			<h5>Ecco tutte le Views del catalogo:</h5><br>
+			
+			<ul>
+			  <li><a href = "/DomainsOfAttack">
+			   Domains Of Attack</a>
+				- Domini di Attacco</li>
+			</ul>
+			
+			<ul>
+			  <li><a href = "/MechanismsOfAttack">
+			   Mechanisms Of Attack</a>
+				- Meccanismi di Attacco</li>
+			</ul>
+			
+			<ul>
+			  <li><a href = "/MobileDevicePatterns">
+			   Mobile Device Patterns</a>
+				- Attacchi per Dispositivi Mobili</li>
+			</ul>
+						
+			<ul>
+			  <li><a href = "/MetaAbstractions">
+			   Meta Abstractions</a>
+				- Attacchi di tipo Meta</li>
+			</ul>
+			
+			<ul>
+			  <li><a href = "/StandardAbstractions">
+			   Standard Abstractions</a>
+				- Attacchi di tipo Standard</li>
+			</ul>
+			
+			<ul>
+			  <li><a href = "/DetailedAbstractions">
+			   Detailed Abstractions</a>
+				- Attacchi di tipo Detailed</li>
+			</ul>
+			
+			<ul>
+			  <li><a href = "/DeprecatedEntries">
+			   Deprecated Entries</a>
+				- Voci Obsolete non più utilizzate</li>
+			</ul>
+			
+		</div>
+	</div>
+</div>
+<br>
+
+
+{% endblock %}
